@@ -1,0 +1,7 @@
+Version: v1.0.0
+1 = Major
+ 0 = Feature release
+  0 = Feature release patch
+
+v1.0.0:
+Initial 'git' release
