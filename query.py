@@ -1,13 +1,11 @@
 #!/usr/bin/env python
-import time
-import sys
-import xmltodict
-
 from tools.connect import Connect
 
+dolle_bot = '575831428:AAEgSGfiw_s2otNbtEJHF_-JTyag0uMPaso'
+
 def main():
-    con_ripe = Connect(  host='rest.db.ripe.net' )
-    print(con_ripe.get_as('213.133.47.254'))
+    con_telegram = Connect(  bot_id=dolle_bot )
+    print(con_telegram.get_me())
 
 
 if __name__ == "__main__":

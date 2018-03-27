@@ -1,46 +1,44 @@
 #!/usr/bin/env python
-import sys
-import re
-import base64
-import time
-import xmltodict
-import pprint
-import collections
+import json
+
 from requests import Request, Session, codes
 
 s = Session()
 
 def do_request(req):
-    headers = dict()
-    text = str()
+    result = dict()
+    result['headers_rec'] = dict()
+    result['data_rec'] = str()
+    result['rfs'] = bool() #raise for status
     prepped = req.prepare()
     try:
         r = s.send( prepped,
                     verify=False)
-        headers = r.headers
-        text = r.text
+        result['headers_rec'] = r.headers
+        result['data_rec'] = r.text
         #status_code = r.status_code
-        raise_for_status = r.raise_for_status() #None for all is OK
+        result['rfs'] = r.raise_for_status() #None for all is OK
     except Exception as e:
         print("do_request: {0}".format(e))
-        raise_for_status = True #Oeps something went wrong
+        result['rfs'] = True #Oeps something went wrong
 
-    return headers,text,raise_for_status
+    return result
 
-def ripe_get_as(host, query):
-    payload = {'query-string': query}
-    headers_generic={'Accept' : 'application/xml'}
-    url_query = "https://rest.db.ripe.net/search?"
-    req = Request('GET', url_query, headers=headers_generic, params=payload)
-    headers_received, text_received, raise_for_status = do_request(req)
+def telegram_get_me(host, bot):
+    headers_generic={'Accept' : 'application/json'}
+    url_query = "https://{0}/bot{1}/getMe".format(host, bot)
+    req = Request('GET', url_query, headers=headers_generic)
+    req_result = do_request(req)
 
-    return text_received
+    return req_result
 
 class Connect(object):
     """Create connect class"""
 
     def __init__(self, **kwargs):
-        self.host = kwargs['host']
+        self.host = 'api.telegram.org'
+        self.bot = kwargs['bot_id']
 
-    def get_as(self, query):
-        return ripe_get_as(self.host, query)
+    def get_me(self):
+
+        return telegram_get_me(self.host, self.bot)
