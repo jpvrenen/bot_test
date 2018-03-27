@@ -1,10 +1,31 @@
 #!/usr/bin/env python
+from __future__ import print_function
+import os
+import sys
+import argparse
 from tools.connect import Connect
 
-dolle_bot = '575831428:AAEgSGfiw_s2otNbtEJHF_-JTyag0uMPaso'
+def msg():
+    """ usage """
+    return ("{0}".format(os.path.basename(sys.argv[0])))+'''
+        [-h, --help     show howto invoke and possible arguments]
+        [-b, --bot_id   use valid bot_id]
+        
+        example:
+        1) query.py -b 123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11
+
+        '''
+
+#Arguments section
+parser = argparse.ArgumentParser(description='Query bot', usage=msg())
+parser.add_argument('-b', '--bot_id',
+                    required=True,
+                    help="use valid bot_id")
+args = parser.parse_args()
+
 
 def main():
-    con_telegram = Connect(  bot_id=dolle_bot )
+    con_telegram = Connect(  bot_id=args.bot_id )
     print(con_telegram.get_me())
 
 
