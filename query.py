@@ -12,7 +12,7 @@ def msg():
         [-b, --bot_id   use valid bot_id]
         
         example:
-        1) query.py -b 123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11
+        1) query.py -b <use valid bot_id>
 
         '''
 
