@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import json
 
+from collections import OrderedDict
 from requests import Request, Session, codes
 
 s = Session()
@@ -29,8 +30,15 @@ def telegram_get_me(host, bot):
     url_query = "https://{0}/bot{1}/getMe".format(host, bot)
     req = Request('GET', url_query, headers=headers_generic)
     req_result = do_request(req)
-
     return req_result
+
+def telegram_get_updates(host, bot):
+    headers_generic={'Accept' : 'application/json'}
+    url_query = "https://{0}/bot{1}/getUpdates".format(host, bot)
+    req = Request('GET', url_query, headers=headers_generic)
+    req_result = do_request(req)
+    return req_result
+
 
 class Connect(object):
     """Create connect class"""
@@ -40,5 +48,7 @@ class Connect(object):
         self.bot = kwargs['bot_id']
 
     def get_me(self):
-
         return telegram_get_me(self.host, self.bot)
+
+    def get_updates(self):
+        return telegram_get_updates(self.host, self.bot)

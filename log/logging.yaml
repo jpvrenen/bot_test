@@ -1,0 +1,48 @@
+---
+version: 1
+disable_existing_loggers: False
+formatters:
+ simple:
+    format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+handlers:
+ console:
+    class: logging.StreamHandler
+    level: DEBUG
+    formatter: simple
+    stream: ext://sys.stdout
+ info_file_handler:
+    class: logging.handlers.RotatingFileHandler
+    level: INFO
+    formatter: simple
+    #filename: /usr/home/expedio/log/info.log
+    filename: D:/DATA/Company/Werkmap/Scripting/Python/bot_test/log/info.log
+    maxBytes: 1024000
+    backupCount: 5
+ error_file_handler:
+    class: logging.handlers.RotatingFileHandler
+    level: ERROR
+    formatter: simple
+    #filename: /usr/home/expedio/log/errors.log
+    filename: D:/DATA/Company/Werkmap/Scripting/Python/bot_test/log/errors.log
+    maxBytes: 1024000
+    backupCount: 5
+ syslog_handler:
+    class: logging.handlers.SysLogHandler
+    address: ['10.10.10.10', 514]
+    level: DEBUG
+    formatter: simple
+    #socktype: ext://socket.SOCK_STREAM
+loggers:
+ __main__:
+    level: DEBUG
+    #handlers: [console, syslog_handler, info_file_handler, error_file_handler, smtp_handler]
+    handlers: [console]
+    propagate: no
+# logging_module1:
+#    level: DEBUG
+#    handlers: [info_file_handler]
+#    propagate: no
+root:
+ level: DEBUG
+ #handlers: [console, syslog_handler, info_file_handler, error_file_handler, smtp_handler]
+ handlers: [console]

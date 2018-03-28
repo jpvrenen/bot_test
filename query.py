@@ -27,6 +27,7 @@ args = parser.parse_args()
 def main():
     con_telegram = Connect(  bot_id=args.bot_id )
     print(con_telegram.get_me())
+    print(con_telegram.get_updates())
 
 
 if __name__ == "__main__":
