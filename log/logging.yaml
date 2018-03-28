@@ -36,7 +36,7 @@ loggers:
  __main__:
     level: DEBUG
     #handlers: [console, syslog_handler, info_file_handler, error_file_handler, smtp_handler]
-    handlers: [console]
+    handlers: [console, info_file_handler, error_file_handler]
     propagate: no
 # logging_module1:
 #    level: DEBUG
@@ -45,4 +45,4 @@ loggers:
 root:
  level: DEBUG
  #handlers: [console, syslog_handler, info_file_handler, error_file_handler, smtp_handler]
- handlers: [console]
+ handlers: [console, info_file_handler, error_file_handler]
