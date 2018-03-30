@@ -8,6 +8,7 @@ import logging
 import logging.config
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
+from telegram.ext import MessageHandler, Filters
 
 #logging section
 logger = logging.getLogger(__name__)
@@ -36,13 +37,19 @@ args = parser.parse_args()
 
 
 def start(bot, update):
-    bot.send_message(chat_id=update.message.chat_id, text="I'm a bot, please talk to me!")
+    test_msg = "Hi {0}, I am a bot!".format(update.message.from_user.first_name)
+    bot.send_message(chat_id=update.message.chat_id, text=test_msg)
+
+def echo(bot, update):
+    bot.send_message(chat_id=update.message.chat_id, text=update.message.text)
 
 def main():
     updater = Updater(token=args.bot_id)
     dispatcher = updater.dispatcher
     start_handler = CommandHandler('start', start)
+    echo_handler = MessageHandler(Filters.text, echo)
     dispatcher.add_handler(start_handler)
+    dispatcher.add_handler(echo_handler)
     updater.start_polling()
     updater.idle()
 
